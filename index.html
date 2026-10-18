@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is it Louis Weinstein's birthday?</title>
+<meta name="description" content="Is it Louis Weinstein's birthday? Find out.">
+<meta property="og:title" content="Is it Louis Weinstein's birthday?">
+<meta property="og:description" content="Find out.">
+<style>
+  :root { --bg: #ffffff; --fg: #111111; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #111111; --fg: #f2f2f2; } }
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--bg); color: var(--fg); text-align: center; padding: 0 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  }
+  h1 { font-size: clamp(1rem, 3vw, 1.5rem); font-weight: 500; margin: 0 0 1rem; opacity: .7; }
+  #answer { font-size: clamp(5rem, 25vw, 14rem); font-weight: 800; line-height: 1; margin: 0; }
+  /* Birthday mode */
+  body.yes { --bg: #ffd400; --fg: #111111; }
+  #video { display: none; max-width: min(90vw, 720px); max-height: 55vh; margin-top: 1.5rem; border-radius: 8px; }
+  body.yes #video { display: block; }
+</style>
+</head>
+<body>
+  <h1>Is it Louis Weinstein's birthday?</h1>
+  <p id="answer">&hellip;</p>
+  <video id="video" playsinline controls preload="none"></video>
+  <noscript><p>Enable JavaScript to find out.</p></noscript>
+
+<script>
+  // Louis's birthdays (month is 1-12)
+  var BIRTHDAYS = [
+    { month: 11, day: 28 },
+    { month: 0,  day: 0 }   // PLACEHOLDER: set second date (0/0 never matches)
+  ];
+
+  // Birthday video, relative to this page (PLACEHOLDER filename)
+  var VIDEO_SRC = 'birthday.mp4';
+
+  // Checks against the visitor's local date
+  var now = new Date();
+  var isBirthday = BIRTHDAYS.some(function (b) {
+    return now.getMonth() + 1 === b.month && now.getDate() === b.day;
+  });
+
+  document.getElementById('answer').textContent = isBirthday ? 'YES' : 'NO';
+  if (isBirthday) {
+    document.body.classList.add('yes');
+
+    // Only loads on birthdays. Tries to autoplay with sound; browsers usually
+    // block that on a first visit, so fall back to muted autoplay.
+    var video = document.getElementById('video');
+    video.src = VIDEO_SRC;
+    var p = video.play();
+    if (p) p.catch(function () {
+      video.muted = true;
+      video.play().catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>
