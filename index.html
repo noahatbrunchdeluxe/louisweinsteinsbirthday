@@ -20,14 +20,18 @@
   #answer { font-size: clamp(5rem, 25vw, 14rem); font-weight: 800; line-height: 1; margin: 0; }
   /* Birthday mode */
   body.yes { --bg: #ffd400; --fg: #111111; }
-  #video { display: none; max-width: min(90vw, 720px); max-height: 55vh; margin-top: 1.5rem; border-radius: 8px; }
+  /* Sizes the Vimeo embed; 73vh keeps the 4:3 player to ~55vh tall */
+  #video { display: none; width: min(90vw, 720px, 73vh); margin-top: 1.5rem; border-radius: 8px; overflow: hidden; }
   body.yes #video { display: block; }
 </style>
 </head>
 <body>
   <h1>Is it Louis Weinstein's birthday?</h1>
   <p id="answer">&hellip;</p>
-  <video id="video" playsinline controls preload="none"></video>
+  <!-- Vimeo embed; src lives in data-src so it only loads on birthdays -->
+  <div id="video">
+    <div style="padding:75% 0 0 0;position:relative;"><iframe data-src="https://player.vimeo.com/video/1236907706?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="birthday"></iframe></div>
+  </div>
   <noscript><p>Enable JavaScript to find out.</p></noscript>
 
 <script>
